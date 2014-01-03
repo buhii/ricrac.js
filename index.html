@@ -1,0 +1,182 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <title>jquery.ricrac</title>
+    <link rel="stylesheet" href="media/bootstrap.min.css" />
+    <link rel="stylesheet" href="media/jquery-ui-1.10.3.custom.min.css" />
+    <link rel="stylesheet" href="media/base.css" />
+  </head>
+  <body>
+
+    <a href="https://github.com/buhii/ricrac.js">
+      <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub">
+    </a>
+
+    <div class="container">
+
+      <h1>jquery.ricrac.js</h1>
+      <p>You can create a simple *1D* button array on canvas. Please click, touch or drag the below box:</p>
+      <p id="intro-pos" class="indicator">pos:</p>
+      <p id="intro-data" class="indicator">data:</p>
+      <canvas id="intro"></canvas>
+      <div><button id="btnChange">More buttons!</button></div>
+
+      <h2>Requirements</h2>
+      <ul>
+        <li><a href="http://jquery.com/">jQuery</a></li>
+        <li>Canvas Element</li>
+      </ul>
+
+      <h2>Demos</h2>
+
+      <ul>
+        <li><a href="#border">With border(resizable)</a></li>
+        <li><a href="#without-border">Without border, 1000+ buttons(resizable)</a></li>
+        <li><a href="#initial">Initial data, read-only</a></li>
+        <li><a href="#resizable">Initial data, read-only(resizable)</a></li>
+      </ul>
+      <h3 id="border">With border(resizable)</h3>
+      <canvas id="with-border"></canvas>
+      <pre>
+$("#with-border").ricrac({
+    dataRange: [1, 35],
+    gridColumn: 6,
+    borderWidth: 8,
+    resizable: true,
+    borderColor: "#ccf",
+    colorOn: "#5c7",
+    colorOff: "#fff",
+    gridSize: 32,   // px
+});</pre>
+
+      <h3 id="without-border">Without border, 1000+ buttons(resizable)</h3>
+      <canvas id="without"></canvas>
+      <pre>
+$("#without").ricrac({
+    dataRange: [7, 1550],
+    gridColumn: 50,
+    borderWidth: 0,
+    resizable: true,
+    gridSize: 10,
+});</pre>
+
+      <h3 id="initial">Initial data, read-only</h3>
+      <canvas id="read-only"></canvas>
+      <pre>
+$("#read-only").ricrac({
+    readonly: true,
+    dataRange: [1, 25],
+    initData: "0101001010000001000101110".split("").map(function(v) {
+      return parseInt(v);
+    }),
+    gridColumn: 5,
+    borderWidth: 0,
+    gridSize: 16,
+    colorOn: "#a75",
+    colorOff: "#fff",
+});</pre>
+
+      <h3 id="resizable">Initial data, read-only(resizable)</h3>
+      <canvas id="gc-column"></canvas>
+      <pre>
+var gcColumn = $("#gc-column").ricrac({
+    initData: "01010101010101010101010101".split("").map(function(v) {
+        return parseInt(v);
+    }),
+    readonly: true,
+    resizable: true,
+    dataRange: [1, 25],
+    gridColumn: 5,
+    borderWidth: 2,
+    gridSize: 32,
+});</pre>
+
+      <h2>License</h2>
+      MIT
+
+      <p class="signature">jquery.ricrac.js by <a href="http://www.buhii.org/">Takahiro Kamatani</a> 2013</p>
+    </div>
+
+    <!-- script here -->
+    <script src="media/jquery.min.js"></script>
+    <script src="media/jquery-ui-1.10.3.custom.min.js"></script>
+    <script src="media/jquery.ricrac.js"></script>
+    <script src="media/jquery.ui.touch-punch.min.js"></script>
+    <script>
+      // intro
+      var gcIntro = $("#intro").ricrac({
+        dataRange: [1, 25],
+        gridColumn: 5,
+        gridSize: 32,
+        borderWidth: 2,
+        changePos: function(pos) {
+          $("#intro-pos").text("pos: " + pos);
+        },
+        changeData: function(data) {
+          $("#intro-data").text("data: " + data.join(""));
+        },
+      });
+
+      // intro: change setting
+      $("#btnChange").click(function() {
+        // more buttons!
+        gcIntro.changeSettings({
+          initData: gcIntro.data(),
+          dataRange: [1, 81],
+          gridSize: 24,
+          gridColumn: 9,
+          borderWidth: 2,
+        });
+        $("#btnChange").hide();
+      });
+
+      // with border
+      $("#with-border").ricrac({
+        dataRange: [1, 35],
+        gridColumn: 6,
+        borderWidth: 8,
+        resizable: true,
+        borderColor: "#ccf",
+        colorOn: "#5c7",
+        colorOff: "#fff",
+        gridSize: 32,   // px
+      });
+
+      // without border
+      $("#without").ricrac({
+        dataRange: [7, 1550],
+        gridColumn: 50,
+        borderWidth: 0,
+        resizable: true,
+        gridSize: 10,
+      });
+
+      // read-only
+      $("#read-only").ricrac({
+        readonly: true,
+        dataRange: [1, 25],
+        initData: "0101001010000001000101110".split("").map(function(v) {
+          return parseInt(v);
+        }),
+        gridColumn: 5,
+        borderWidth: 0,
+        gridSize: 16,
+        colorOn: "#a75",
+        colorOff: "#fff",
+      });
+
+      // change with resizer
+      var gcColumn = $("#gc-column").ricrac({
+        initData: "01010101010101010101010101".split("").map(function(v) {
+          return parseInt(v);
+        }),
+        readonly: true,
+        resizable: true,
+        dataRange: [1, 25],
+        gridColumn: 5,
+        borderWidth: 2,
+        gridSize: 32,
+      });
+    </script>
+  </body>
+</html>
